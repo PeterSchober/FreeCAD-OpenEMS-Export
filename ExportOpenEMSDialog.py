@@ -14,7 +14,14 @@ APP_CONTEXT = "None"
 
 try:
 	import FreeCAD
-	import webbrowser
+	version = FreeCAD.Version()
+	versionNum = int(version[0])+int(version[1])*0.1+int(version[2])*0.01
+	print(versionNum)
+	if versionNum >= 1.0:
+		import webbrowser
+	else:
+		import WebGui
+		
 	import KiCADImporterToolDialog	#import for KiCAD Import Tool
 	APP_CONTEXT = "FreeCAD"
 except:
@@ -517,7 +524,10 @@ class ExportOpenEMSDialog(QtCore.QObject):
 		Open index help html webpage inside freecad window.
 		:return:
 		"""
-		webbrowser.open(f"{os.path.dirname(__file__)}\\documentation\\help\\index.html")
+		if versionNum >= 1.0:
+			webbrowser.open(f"{os.path.dirname(__file__)}\\documentation\\help\\index.html")
+		else:
+			WebGui.openBrowser(f"{os.path.dirname(__file__)}\\documentation\\help\\index.html")
 
 	def openBlenderWebGuiHelp(self):
 		"""
