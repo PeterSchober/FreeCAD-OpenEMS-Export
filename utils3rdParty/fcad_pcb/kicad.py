@@ -551,35 +551,42 @@ class KicadFcad:
             # this is a kicad_mod file, make it look like a kicad_pcb
             pcb = KicadPCB(parseSexp('''
                     (kicad_pcb
+                        (generator "pcbnew")
+                        (generator_version "9.0")
                         (general
-                            (thickness 0.3)
-                            (drawings 0)
-                            (tracks 0)
-                            (zones 0)
-                            (modules 1)
-                            (nets 0)
+                            (thickness 0.42)
+                            (legacy_teardrops no)
                         )
                         (layers
-                            (0 F.Cu signal)
-                            (31 B.Cu signal)
-                            (32 B.Adhes user)
-                            (33 F.Adhes user)
-                            (34 B.Paste user)
-                            (35 F.Paste user)
-                            (36 B.SilkS user)
-                            (37 F.SilkS user)
-                            (38 B.Mask user)
-                            (39 F.Mask user)
-                            (40 Dwgs.User user)
-                            (41 Cmts.User user)
-                            (42 Eco1.User user)
-                            (43 Eco2.User user)
-                            (44 Edge.Cuts user)
-                            (45 Margin user)
-                            (46 B.CrtYd user)
-                            (47 F.CrtYd user)
-                            (48 B.Fab user)
-                            (49 F.Fab user)
+                                (0 "F.Cu" signal)
+                                (2 "B.Cu" signal)
+                                (9 "F.Adhes" user "F.Adhesive")
+                                (11 "B.Adhes" user "B.Adhesive")
+                                (13 "F.Paste" user)
+                                (15 "B.Paste" user)
+                                (5 "F.SilkS" user "F.Silkscreen")
+                                (7 "B.SilkS" user "B.Silkscreen")
+                                (1 "F.Mask" user)
+                                (3 "B.Mask" user)
+                                (17 "Dwgs.User" user "User.Drawings")
+                                (19 "Cmts.User" user "User.Comments")
+                                (21 "Eco1.User" user "User.Eco1")
+                                (23 "Eco2.User" user "User.Eco2")
+                                (25 "Edge.Cuts" user)
+                                (27 "Margin" user)
+                                (31 "F.CrtYd" user "F.Courtyard")
+                                (29 "B.CrtYd" user "B.Courtyard")
+                                (35 "F.Fab" user)
+                                (33 "B.Fab" user)
+                                (39 "User.1" user)
+                                (41 "User.2" user)
+                                (43 "User.3" user)
+                                (45 "User.4" user)
+                                (47 "User.5" user)
+                                (49 "User.6" user)
+                                (51 "User.7" user)
+                                (53 "User.8" user)
+                                (55 "User.9" user)
                         )
                     )'''))
             self.module = self.pcb
@@ -646,8 +653,10 @@ class KicadFcad:
             self.layer_match = '*.{}'.format(self.layer.split('.')[-1])
 
     def _copperLayers(self):
+        #self._log('_copperLayers: {}', [(t, self.pcb.layers[t]) for t in self.pcb.layers], level='warning')
         coppers = [ (int(t),unquote(self.pcb.layers[t][0])) \
-                        for t in self.pcb.layers if int(t)<=31]
+                        for t in self.pcb.layers if self.pcb.layers[t][1] in ["signal", "power", "mixed", "jumper"]]
+        self._log('_copperLayers: {}', coppers, level='warning')
         coppers.sort(key=lambda x : x[0])
         return coppers
 
@@ -714,8 +723,8 @@ class KicadFcad:
         if self.stackup:
             for _,name in coppers:
                 if unquote(name) not in self._stackup_map:
-                    self._log('stackup info ignored because copper layer {} is not found',
-                              name, level='warning')
+                    self._log('stackup info ignored because copper layer {} is not found, map: {}',
+                              name, self._stackup_map, level='warning')
                     self.stackup = []
                     self._stackup_map = {}
                     break
@@ -1147,7 +1156,7 @@ class KicadFcad:
     def _makeEdgeCuts(self, sexp, ctx, wires, non_closed, at=None, layers=None):
         if not layers:
             # default to layer Edge.Cuts
-            layers = [44]
+            layers = [25]
         for l in layers:
             try:
                 _,layer = self.findLayer(l)

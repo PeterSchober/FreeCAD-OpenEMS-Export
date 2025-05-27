@@ -14,7 +14,7 @@ APP_CONTEXT = "None"
 
 try:
 	import FreeCAD
-	import WebGui
+	#import WebGui
 	import KiCADImporterToolDialog	#import for KiCAD Import Tool
 	APP_CONTEXT = "FreeCAD"
 except:
