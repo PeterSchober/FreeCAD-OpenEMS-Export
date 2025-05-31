@@ -2,7 +2,7 @@
 #
 #
 import os
-from PySide2 import QtGui, QtCore, QtWidgets
+from PySide import QtGui, QtCore, QtWidgets
 import numpy as np
 import re
 import math
@@ -1890,7 +1890,7 @@ title('Frequency: {{}} GHz'.format(nf2ff.freq[0]/1e9))
 legend()
 
 show()
-
+  
 #
 # Dump radiation field to vtk file
 #
