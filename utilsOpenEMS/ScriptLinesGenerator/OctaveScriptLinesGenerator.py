@@ -2167,7 +2167,7 @@ phiRange = (""" + phiStart + """:""" + phiStep + """:""" + phiStop + """) - 180;
 disp( 'calculating the 3D far field...' );
 
 %
-%	nf2ffBox{index} - index is set based on GUI option choosed which NF2FF box should be calculated
+%	nf2ffBox{index} - index is set based on GUI option chosen which NF2FF box should be calculated
 %
 %	'Mode',1 - always recalculate data
 %		url: https://github.com/thliebig/openEMS/blob/master/matlab/CalcNF2FF.m

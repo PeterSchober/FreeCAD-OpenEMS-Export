@@ -18,7 +18,7 @@ class GuiHelpers:
             msgBox.exec()
 
     #
-    #   Display messagebox wit Save/Cancel buttons and after user choice return True/False
+    #   Display messagebox with Save/Cancel buttons and after user choice return True/False
     #
     def displayYesNoMessage(self, msgText):
         msgBox = QtWidgets.QMessageBox()

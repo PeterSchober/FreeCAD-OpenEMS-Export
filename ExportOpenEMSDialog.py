@@ -959,7 +959,7 @@ class ExportOpenEMSDialog(QtCore.QObject):
 
 			elif (currSetting.getType() == 'Fixed Count'):
 
-				#collecting Z coordinates where grid will be drawn, gird will be drawn in XY plane
+	            #collecting Z coordinates where grid will be drawn, grid will be drawn in XY plane
 				zAuxGridCoordList = []
 				if (currSetting.zenabled):
 					if int(currSetting.getXYZ(refUnit)['z']) != 0:
@@ -1699,12 +1699,12 @@ class ExportOpenEMSDialog(QtCore.QObject):
 		return outMessage
 
 	#
-	#	After click on generate openEMS script file button there is check if settings are saved, if not user is asked if he want's to save settings if not
+	#	After click on generate openEMS script file button there is check if settings are saved, if not user is asked if he wants to save settings if not
 	#	all simulation connected files will be generated inside local directory next to freecad file.
 	#
 	def generateOpenEMSScriptButtonClicked(self):
 		if (self.simulationOutputDir is None or self.simulationOutputDir == ""):
-			saveSettingsFlag = self.guiHelpers.displayYesNoMessage("Simulation settings aren't saved till now, do you want to save them? It's recommended to save sttings, otherwise simulaation files will be generated in same folder as FreeCAD file.")
+			saveSettingsFlag = self.guiHelpers.displayYesNoMessage("Simulation settings aren't saved yet, do you want to save them? It's recommended to save settings, otherwise simulation files will be generated in same folder as FreeCAD file.")
 			if saveSettingsFlag:
 				self.saveToFileSettingsButtonClicked()
 
@@ -1906,7 +1906,7 @@ class ExportOpenEMSDialog(QtCore.QObject):
 			if settingsInst.coordsType == "rectangular":
 				self.form.auxGridAxis.setEnabled(True)
 			else:
-				#set grid drawing plane to 'z' and disable chosing plane to draw grid
+				#set grid drawing plane to 'z' and disable choosing plane to draw grid
 				index = self.form.auxGridAxis.findText('z', QtCore.Qt.MatchFixedString)
 				if index >= 0:
 					 self.form.auxGridAxis.setCurrentIndex(index)
