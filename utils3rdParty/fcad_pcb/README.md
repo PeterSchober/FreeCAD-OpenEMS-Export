@@ -77,7 +77,7 @@ Generate these full solid objects ready to for the FEM workbench
 #### Supply copper thickness per layer, pass a `dictionary` instead.
 
 Use either **`integer`** or **`layer name`**
-- **`integer`** (0~31, `0` being the front and `31` the back)
+- **`integer`** (even, `0` being the front and `2` the back)
 - **`layer name`** for key.
   **Note:** key `None` can be used for default thickness.
 
