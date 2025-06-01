@@ -675,7 +675,7 @@ class KicadFcad:
     def setLayer(self,layer):
         self.layer_type, self.layer_name = self.findLayer(layer)
         self.layer = unquote(self.layer_name)
-        if self.layer_type <= 31:
+        if self.layer_type % 2 == 0:
             self.layer_match = '*.Cu'
         else:
             self.layer_match = '*.{}'.format(self.layer.split('.')[-1])
@@ -735,7 +735,7 @@ class KicadFcad:
             layer, name = self.findLayer(item[0], 99)
             self._stackup_map[unquote(name)] = item
             thickness = item[2]
-            if layer <= 31: # is copper layer
+            if layer % 2 == 0: # is copper layer
                 if accumulate is not None:
                     # counting intermediate layer(s) thickness
                     board_thickness += accumulate
